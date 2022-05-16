@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <body>
+
+        <div>
+            <div class="row">
+                <div class="col-md-10 offset-md-1">
+                    <div class="card m-auto" style="max-width:850px">
+                        <div class="card-body">
+
+                            <h2><strong>TrueNAS reviews API</strong><br></h2>
+                            <p>API will allow to save, list and download UI reviews</p>
+                            <h4>Add a new review</h4>
+                            <ol>
+                                <li>You'll use the POST method to the <kbd>/api/reviews/add/</kbd> endpoint. Append your
+                                    access token as a header in your request. <br>
+                                    Here's an example:
+                                    <code>&lt;Authorization: Bearer {token}&gt;</code> <br> <br>
+                                    Example call: <br>
+                                    <kbd>POST</kbd> http://localhost:5000/api/reviews/add/<br> <br>
+                                    Body
+                                    <div class="code-block">
+                                        <pre>{<br>    "url": "truenas.com/index"<br>    "review": "This is my firest",<br>}</pre>
+                                    </div>
+                                    Example Response:
+                                    <div class="code-block">
+                                        <pre>{<br>    "review_id'": 1<br>    "success": True<br>}</pre>
+                                    </div>
+                                </li>
+                            </ol>
+                            <br>
+
+                            <h4>Get list of paginated reviews</h4>
+                            <p>You can use this API to get list of reviews.</p>
+                            <ol>
+                                <li>You'll use the GET method to the <kbd>/api/reviews/</kbd> endpoint. Access token
+                                    is not required.<br>
+                                    <br>
+                                    Example call: <br>
+                                    <kbd>GET</kbd> http://localhost:5000/api/reviews/?start=1&length=10 <br> <br>
+                                    Example Response:
+                                    <div class="code-block">
+                                        <pre>{<br>    'draw': 1,<br>    'recordsTotal': '100',<br>    'recordsFiltered': '10',<br>    'data': [{<br>        "id": "1",<br>         "url": "https://truenas.com/1",<br>         "date_created": "2022-05-16 12:18:10.339572",<br>         "review": "Another review",<br>          ... <br>    }] <br>}</pre>
+                                    </div>
+                                </li>
+                            </ol>
+                            <br>
+
+                            <h4>Download csv of reviews</h4>
+                            <p>You can use this API to get download csv file of reviews.</p>
+                            <ol>
+                                <li>You'll use the GET method to the <kbd>/api/reviews/export/</kbd> endpoint. Access token
+                                    is not required.<br>
+                                    <br>
+                                    Example call: <br>
+                                    <kbd>GET</kbd> http://localhost:5000/api/reviews/export/ <br> <br>
+                                    Response will be a csv file.
+                                </li>
+                            </ol>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+{% endblock %}

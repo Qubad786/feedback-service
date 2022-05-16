@@ -1,0 +1,109 @@
+{% extends "base.html" %} {% block content %}
+    <body>
+    {% block csss %}
+        <style>
+            .dataTables_length > label, .dataTables_filter > label {
+                display: inline-flex !important;
+                align-items: center;
+            }
+
+            .dataTables_length > label > select, .dataTables_filter > label > input {
+                margin: 0 12px;
+            }
+
+            .
+        </style>
+
+    {% endblock %}
+    <div>
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div class="card m-auto" style="max-width: 1000px;">
+                    <div class="card-body">
+                        <table id="example" class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Url</th>
+                                <th>Review</th>
+                                <th>Date created</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <div class="text-center" id="">
+                            <button class="btn btn-primary" id="export" type="button"
+                                    style="background-color: rgb(41,41,41);">
+                                Export to CSV
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        $(document).ready(function () {
+
+            var table = $('#example').DataTable({
+                dom: 'Bfrtip',
+                paging: true,
+                pageLength: 10,
+                searching: false,
+                info: false,
+                processing: true,
+                ajax: function (data, callback, settings) {
+                    $.ajax({
+                        url: '/api/reviews/',
+                        type: 'get',
+                        contentType: 'application/json',
+                        data: {
+                            start: (data.start / data.length) + 1,
+                            length: data.length
+                        },
+                        success: function (data, textStatus, jQxhr) {
+                            callback({
+                                data: data.data,
+                                recordsTotal: data.TotalRecords,
+                                recordsFiltered: data.RecordsFiltered
+                            });
+                        },
+                        error: function (jqXhr, textStatus, errorThrown) {
+                        }
+                    });
+                },
+                filter: false,
+                serverSide: true,
+                buttons: ['csv'],
+                columns: [
+                    {data: 'id'},
+                    {data: 'url'},
+                    {data: 'review'},
+                    {data: 'date_created'}
+                ],
+            });
+
+            $('#export').on('click', function () {
+                $.ajax({
+                    url: '/api/reviews/export/',
+                    method: 'GET',
+                    success: function (data) {
+                        const blob = new Blob([data], {type: 'text/csv'});
+                        const downloadUrl = URL.createObjectURL(blob);
+                        const a = document.createElement("a");
+                        a.href = downloadUrl;
+                        a.download = "reviews.csv";
+                        document.body.appendChild(a);
+                        a.click();
+                    }
+                });
+            });
+        });
+
+    </script>
+{% endblock %}
