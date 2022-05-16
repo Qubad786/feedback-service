@@ -18,7 +18,7 @@
                                     Here's an example:
                                     <code>&lt;Authorization: Bearer {token}&gt;</code> <br> <br>
                                     Example call: <br>
-                                    <kbd>POST</kbd> http://localhost:5000/api/reviews/add/<br> <br>
+                                    <kbd>POST</kbd> http://localhost:8000/api/reviews/add/<br> <br>
                                     Body
                                     <div class="code-block">
                                         <pre>{<br>    "url": "truenas.com/index"<br>    "review": "This is my firest",<br>}</pre>
@@ -29,6 +29,7 @@
                                     </div>
                                 </li>
                             </ol>
+
                             <br>
 
                             <h4>Get list of paginated reviews</h4>
@@ -38,7 +39,7 @@
                                     is not required.<br>
                                     <br>
                                     Example call: <br>
-                                    <kbd>GET</kbd> http://localhost:5000/api/reviews/?start=1&length=10 <br> <br>
+                                    <kbd>GET</kbd> http://localhost:8000/api/reviews/?start=1&length=10 <br> <br>
                                     Example Response:
                                     <div class="code-block">
                                         <pre>{<br>    'draw': 1,<br>    'recordsTotal': '100',<br>    'recordsFiltered': '10',<br>    'data': [{<br>        "id": "1",<br>         "url": "https://truenas.com/1",<br>         "date_created": "2022-05-16 12:18:10.339572",<br>         "review": "Another review",<br>          ... <br>    }] <br>}</pre>
@@ -54,7 +55,7 @@
                                     is not required.<br>
                                     <br>
                                     Example call: <br>
-                                    <kbd>GET</kbd> http://localhost:5000/api/reviews/export/ <br> <br>
+                                    <kbd>GET</kbd> http://localhost:8000/api/reviews/export/ <br> <br>
                                     Response will be a csv file.
                                 </li>
                             </ol>

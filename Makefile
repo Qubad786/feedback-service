@@ -32,7 +32,7 @@ logs:
 	docker-compose $(LOCAL_COMPOSE_OPTIONS) logs --tail 50 --follow
 
 server:
-	docker exec $(LOCAL_COMPOSE_OPTIONS) bash -c "gunicorn --bind 0.0.0.0:5000 run:app"
+	docker exec $(LOCAL_COMPOSE_OPTIONS) bash -c "gunicorn --bind 0.0.0.0:8000 run:app"
 
 ssh:
 	docker exec -it $(LOCAL_WEB_CONTAINER) /bin/bash
